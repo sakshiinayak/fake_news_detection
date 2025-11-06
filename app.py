@@ -202,9 +202,9 @@ def load_model():
 
     # Google Drive file links (use the 'uc?id=' format)
     gdrive_links = {
-        model_path: "https://drive.google.com/uc?id=1U8V2SE1fks-11OqspWjqS8wURpgZEZ3u",  # model_metadata
+        model_path: "https://drive.google.com/uc?id=14zZeCW37JutrZR3p9DrKzGAGgeTRguH0",  # model_metadata
         vectorizer_path: "https://drive.google.com/uc?id=1KZWE5wW3rgb2RH_LhEVA7Ri_bIvFMpXX",  # tfidf
-        metadata_path: "https://drive.google.com/uc?id=14zZeCW37JutrZR3p9DrKzGAGgeTRguH0"  # fake news
+        metadata_path: "https://drive.google.com/uc?id=1U8V2SE1fks-11OqspWjqS8wURpgZEZ3u" # fake news
     }
 
     # Download files if missing
