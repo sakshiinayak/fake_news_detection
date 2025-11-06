@@ -9,6 +9,7 @@ import requests
 from typing import List, Dict, Optional
 import os
 from dotenv import load_dotenv
+import gdown
 
 # Load variables from the .env file
 load_dotenv()
@@ -187,27 +188,42 @@ class FactCheckAPI:
 
 # ----------------------------
 # Load Model and Vectorizer
-# ----------------------------
+# ----------------------------import gdown
+import os
+import pickle
+import streamlit as st
+
 @st.cache_resource
 def load_model():
-    try:
-        with open("fake_news_model_v2.pkl", "rb") as f:
-            model = pickle.load(f)
-        with open("tfidf_vectorizer_v2.pkl", "rb") as f:
-            vectorizer = pickle.load(f)
-        return model, vectorizer
-    except FileNotFoundError:
-        st.error("❌ Model files not found! Please run `train_model.py` first.")
-        st.info("""
-        **How to train the model:**
-        1. Download the dataset from Kaggle
-        2. Place Fake.csv and True.csv in the same directory
-        3. Run: `python train_model.py`
-        4. Then run: `streamlit run app.py`
-        """)
-        st.stop()
+    """Download model and vectorizer from Google Drive and load them"""
+    model_path = "fake_news_model_v2.pkl"
+    vectorizer_path = "tfidf_vectorizer_v2.pkl"
+    metadata_path = "model_metadata.pkl"
 
+    # Google Drive file links (use the 'uc?id=' format)
+    gdrive_links = {
+        model_path: "https://drive.google.com/uc?id=1U8V2SE1fks-11OqspWjqS8wURpgZEZ3u",  # model_metadata
+        vectorizer_path: "https://drive.google.com/uc?id=1KZWE5wW3rgb2RH_LhEVA7Ri_bIvFMpXX",  # tfidf
+        metadata_path: "https://drive.google.com/uc?id=14zZeCW37JutrZR3p9DrKzGAGgeTRguH0"  # fake news
+    }
+
+    # Download files if missing
+    for path, link in gdrive_links.items():
+        if not os.path.exists(path):
+            with st.spinner(f"📥 Downloading {path} from Google Drive..."):
+                gdown.download(link, path, quiet=False)
+
+    # Load model and vectorizer
+    with open(model_path, "rb") as f:
+        model = pickle.load(f)
+    with open(vectorizer_path, "rb") as f:
+        vectorizer = pickle.load(f)
+
+    st.success("✅ Model and vectorizer loaded successfully!")
+    return model, vectorizer
+# Load model and vectorizer at app start
 model, vectorizer = load_model()
+
 
 # ----------------------------
 # Text Preprocessing
