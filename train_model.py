@@ -188,7 +188,7 @@ def train_model(df):
     return best_model, vectorizer, metadata
 
 # Test with sample texts
-def test_sample_predictions(model, vectorizer):
+'''def test_sample_predictions(model, vectorizer):
     """Test model with sample real and fake news"""
     print("\n" + "="*60)
     print("Testing with sample texts...")
@@ -224,7 +224,7 @@ def test_sample_predictions(model, vectorizer):
         if (expected == "Real" and pred == 1) or (expected == "Fake" and pred == 0):
             print("✅ Correct prediction")
         else:
-            print("❌ Incorrect prediction")
+            print("❌ Incorrect prediction") '''
 
 # Main execution
 if __name__ == "__main__":
@@ -240,7 +240,7 @@ if __name__ == "__main__":
         model, vectorizer, metadata = train_model(df)
         
         # Test with samples
-        test_sample_predictions(model, vectorizer)
+        
         
         print("\n" + "="*60)
         print("Training completed successfully!")
